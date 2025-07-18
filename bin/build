@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+rm chart*.gem
+gem build chart.gemspec
+gem install chart
+bundle install
