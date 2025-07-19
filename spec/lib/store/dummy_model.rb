@@ -18,8 +18,10 @@ end
 class TestModel
   extend Chart::Store::Base
   extend Chart::Store::HasOne
+  extend Chart::Store::HasMany
 
   has_one :model_relation
+  has_many :multiple_relations
 
   attr_accessor :id, :name
 

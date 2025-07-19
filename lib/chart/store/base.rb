@@ -9,7 +9,7 @@ module Chart
       end
 
       def save(instance)
-        store << instance
+        store << instance unless store.include?(instance)
       end
 
       def all
