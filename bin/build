@@ -2,5 +2,6 @@
 
 rm chart*.gem
 gem build chart.gemspec
+gem uninstall chart
 gem install chart
 bundle install

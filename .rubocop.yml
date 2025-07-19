@@ -41,6 +41,15 @@ Metrics/MethodLength:
   Max: 10
   Exclude:
     - "spec/**/*"
+    - lib/chart.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/chart.rb
+
+Metrics/ClassLength:
+  Exclude:
+    - lib/chart.rb
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyle: consistent_comma

@@ -7,19 +7,44 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.3)
+    backport (1.2.0)
+    benchmark (0.4.1)
     byebug (12.0.0)
+    date (3.4.1)
     diff-lcs (1.6.2)
+    erb (5.0.2)
+    jaro_winkler (1.6.1)
     json (2.13.0)
+    kramdown (2.5.1)
+      rexml (>= 3.3.9)
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
+    logger (1.7.0)
+    nokogiri (1.18.8-x86_64-darwin)
+      racc (~> 1.4)
+    observer (0.1.2)
+    ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
     prism (1.4.0)
+    psych (5.2.6)
+      date
+      stringio
     racc (1.8.1)
     rainbow (3.1.1)
+    rbs (3.6.1)
+      logger
+    rdoc (6.14.2)
+      erb
+      psych (>= 4.0.0)
     regexp_parser (2.10.0)
+    reverse_markdown (3.0.0)
+      nokogiri
+    rexml (3.4.1)
     rspec (3.13.1)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -52,21 +77,49 @@ GEM
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
     ruby-progressbar (1.13.0)
+    solargraph (0.56.1)
+      backport (~> 1.2)
+      benchmark (~> 0.4)
+      bundler (~> 2.0)
+      diff-lcs (~> 1.4)
+      jaro_winkler (~> 1.6, >= 1.6.1)
+      kramdown (~> 2.3)
+      kramdown-parser-gfm (~> 1.1)
+      logger (~> 1.6)
+      observer (~> 0.1)
+      ostruct (~> 0.6)
+      parser (~> 3.0)
+      prism (~> 1.4)
+      rbs (~> 3.6.1)
+      reverse_markdown (~> 3.0)
+      rubocop (~> 1.38)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9, >= 0.9.24)
+      yard-solargraph (~> 0.1)
+    stringio (3.1.7)
+    thor (1.4.0)
+    tilt (2.6.1)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    yard (0.9.37)
+    yard-solargraph (0.1.0)
+      yard (~> 0.9)
 
 PLATFORMS
-  ruby
   x86_64-darwin-24
 
 DEPENDENCIES
   bundler (~> 2.6)
   byebug (~> 12.0)
   chart!
+  rdoc
   rspec (~> 3.13)
   rubocop (~> 1.78)
   rubocop-performance (~> 1.25)
+  solargraph (~> 0.56.1)
+  yard
 
 BUNDLED WITH
    2.6.8

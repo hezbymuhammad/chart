@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe Chart::Models::Base do
-  class TestModel < Chart::Models::Base
-    attr_accessor :id, :name
+class TestModel < Chart::Models::Base
+  attr_accessor :id, :name
 
-    def initialize(attributes = {})
-      @id = attributes[:id]
-      @name = attributes[:name]
-    end
+  def initialize(attributes = {})
+    @id = attributes[:id]
+    @name = attributes[:name]
   end
+end
 
+RSpec.describe Chart::Models::Base do
   before(:each) do
     TestModel.send(:instance_variable_set, :@store, [])
   end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe Chart::Initializers::Base do
-  class TestInitializer < Chart::Initializers::Base
-  end
+class TestInitializer < Chart::Initializers::Base
+end
 
+RSpec.describe Chart::Initializers::Base do
   describe '#execute' do
     it 'raises NotImplementedError' do
       initializer = TestInitializer.new
