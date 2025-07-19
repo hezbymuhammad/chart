@@ -17,7 +17,7 @@ module Chart
       end
 
       def to_s
-        "#{name} (#{id}) - $#{format('%.2f', price)}"
+        "#{name} (#{id}) - $#{format('%.2f', price)} - offer: #{offer ? offer.name : 'none'}"
       end
     end
   end
