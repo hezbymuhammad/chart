@@ -115,4 +115,32 @@ RSpec.describe Chart::Models::Basket do
       expect(Chart::Models::Basket.all).to be_empty
     end
   end
+
+  describe '.add' do
+    before(:each) do
+      product = Chart::Models::Product.new(id: 'R01', name: 'Red Widget', price: 32.95)
+      product.save
+    end
+
+    it 'adds a new product to the basket' do
+      basket = Chart::Models::Basket.add('R01', 2)
+
+      expect(basket.product.id).to eq('R01')
+      expect(basket.quantity).to eq(2)
+    end
+
+    it 'increases the quantity of an existing basket' do
+      basket = Chart::Models::Basket.add('R01', 2)
+      expect(basket.quantity).to eq(2)
+
+      basket = Chart::Models::Basket.add('R01', 3)
+      expect(basket.quantity).to eq(5)
+    end
+
+    it 'raises an error if the product is not found' do
+      expect do
+        Chart::Models::Basket.add('INVALID_CODE')
+      end.to raise_error(ArgumentError, 'Product not found')
+    end
+  end
 end
