@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Chart
-  # Models module representation of data model
   module Models
+    # DeliveryFee model represents a delivery fee in the chart.
     class DeliveryFee < Base
       attr_accessor :id, :name, :price, :chart_price_threshold
 
