@@ -34,7 +34,7 @@ module Chart
           command.split[1],
           command.split[2],
           command.split[3]
-        ) || 'Not found'
+        ) || "\n👩‍⚕️ enter ? to show navigation options. Enter q to quit"
         puts "\n"
       end
     end
@@ -53,32 +53,61 @@ module Chart
         add(arg, aarg)
       when 'total'
         total
+      when 'help'
+        display_help
+      when '?'
+        display_help
       else
-        puts "Unable to find command.\n\n"
+        puts "❌ Unable to find command.\n\n"
         display_help
       end
     end
 
     def init
+      puts "🚀 Initializing your application... Please hold on tight! 🌟"
+
+      puts "🛠️  Setting up your product data..."
       Chart::Initializers::Product.new.execute
+      puts "✅ Products initialized successfully!"
+
+      puts "🛠️  Setting up your delivery fee rules..."
       Chart::Initializers::DeliveryFee.new.execute
+      puts "✅ Delivery fees initialized successfully!"
+
+      puts "🛠️  Setting up your offers..."
       Chart::Initializers::Offer.new.execute
+      puts "✅ Offers initialized successfully!"
+
+      puts "🎉 All initializers have been run successfully! Your application is ready to go! 🎉"
+      puts "Happy shopping! 🛒✨"
     end
 
     def list(resource)
       case resource
       when 'products'
-        Chart::Models::Product.all
+        [
+          "📚 products:",
+          Chart::Models::Product.all
+        ].join("\n")
       when 'delivery_fees'
-        Chart::Models::DeliveryFee.all
+        [
+          "📦 delivery_fees:",
+          Chart::Models::DeliveryFee.all
+        ].join("\n")
       when 'offers'
-        Chart::Models::Offer.all
+        [
+          "💰 offers:",
+          Chart::Models::Offer.all
+        ].join("\n")
       when 'baskets'
-        Chart::Models::Basket.all
+        [
+          "🛒 baskets:",
+          Chart::Models::Basket.all
+        ].join("\n")
       when 'all'
         list_all
       else
-        'Unable to find resource. Available resources: products, delivery_fees, offers, baskets'
+        "Unable to find resource.\n Available resources: 📚 products, 📦 delivery_fees, 💰 offers, 🛒 baskets"
       end
     end
 
