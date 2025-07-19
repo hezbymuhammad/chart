@@ -59,9 +59,7 @@ module Chart
         check_is_init && total
       when 'checkout'
         check_is_init && checkout
-      when 'help'
-        display_help
-      when '?'
+      when 'help', '?'
         display_help
       else
         puts "❌ Unable to find command.\n\n"
@@ -70,44 +68,44 @@ module Chart
     end
 
     def init
-      puts "🚀 Initializing your application... Please hold on tight! 🌟"
+      puts '🚀 Initializing your application... Please hold on tight! 🌟'
 
-      puts "🛠️  Setting up your product data..."
+      puts '🛠️  Setting up your product data...'
       Chart::Initializers::Product.new.execute
-      puts "✅ Products initialized successfully!"
+      puts '✅ Products initialized successfully!'
 
-      puts "🛠️  Setting up your delivery fee rules..."
+      puts '🛠️  Setting up your delivery fee rules...'
       Chart::Initializers::DeliveryFee.new.execute
-      puts "✅ Delivery fees initialized successfully!"
+      puts '✅ Delivery fees initialized successfully!'
 
-      puts "🛠️  Setting up your offers..."
+      puts '🛠️  Setting up your offers...'
       Chart::Initializers::Offer.new.execute
-      puts "✅ Offers initialized successfully!"
+      puts '✅ Offers initialized successfully!'
 
-      puts "🎉 All initializers have been run successfully! Your application is ready to go! 🎉"
-      puts "Happy shopping! 🛒✨"
+      puts '🎉 All initializers have been run successfully! Your application is ready to go! 🎉'
+      puts 'Happy shopping! 🛒✨'
     end
 
     def list(resource)
       case resource
       when 'products'
         [
-          "📚 products:",
+          '📚 products:',
           Chart::Models::Product.all
         ].join("\n")
       when 'delivery_fees'
         [
-          "📦 delivery_fees:",
+          '📦 delivery_fees:',
           Chart::Models::DeliveryFee.all
         ].join("\n")
       when 'offers'
         [
-          "💰 offers:",
+          '💰 offers:',
           Chart::Models::Offer.all
         ].join("\n")
       when 'baskets'
         [
-          "🛒 baskets:",
+          '🛒 baskets:',
           Chart::Models::Basket.all
         ].join("\n")
       when 'all'
@@ -121,7 +119,8 @@ module Chart
       cleaned_quantity =  quantity.nil? ? 1 : quantity.to_f
 
       begin
-        Chart::Models::Basket.add(product_code, cleaned_quantity)
+        added_product = Chart::Models::Basket.add(product_code, cleaned_quantity)
+        puts "✅ Product added to basket: #{added_product.product.name}"
       rescue StandardError => e
         puts "\n‼️‼️‼️ Error adding product to basket: #{e.message}"
       end
