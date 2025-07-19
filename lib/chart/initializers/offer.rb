@@ -2,6 +2,7 @@
 
 module Chart
   module Initializers
+    # Offer initializer class
     class Offer < Base
       def execute
         offer_data.each_with_index do |offer, index|

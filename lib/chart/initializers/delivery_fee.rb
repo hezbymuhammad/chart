@@ -2,6 +2,7 @@
 
 module Chart
   module Initializers
+    # DeliveryFee initializer class
     class DeliveryFee < Base
       def execute
         delivery_data.each_with_index do |rule, index|

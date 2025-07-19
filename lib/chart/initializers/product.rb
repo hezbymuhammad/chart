@@ -2,6 +2,7 @@
 
 module Chart
   module Initializers
+    # Product initializer class
     class Product < Base
       def execute
         products_data.each do |data|

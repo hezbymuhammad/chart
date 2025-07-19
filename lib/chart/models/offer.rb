@@ -16,7 +16,7 @@ module Chart
 
       def get_discount_for(basket)
         return unless status == 'active'
-        return unless validate_strategy_for(basket)
+        return unless validate_strategy_for?(basket)
 
         calculate_discount_for(basket)
       end
@@ -27,7 +27,7 @@ module Chart
 
       private
 
-      def validate_strategy_for(basket)
+      def validate_strategy_for?(basket)
         case @strategy
         when 'pair'
           basket.quantity >= 2
