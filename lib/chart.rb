@@ -119,7 +119,12 @@ module Chart
 
     def add(product_code, quantity = 1)
       cleaned_quantity =  quantity.nil? ? 1 : quantity.to_f
-      Chart::Models::Basket.add(product_code, cleaned_quantity)
+
+      begin
+        Chart::Models::Basket.add(product_code, cleaned_quantity)
+      rescue StandardError => e
+        puts "\n‼️‼️‼️ Error adding product to basket: #{e.message}"
+      end
     end
 
     def total
