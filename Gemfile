@@ -6,5 +6,6 @@ gem 'bundler', '~> 2.6'
 gem 'byebug', '~> 12.0'
 gem 'rspec', '~> 3.13'
 gem 'rubocop', '~> 1.78', require: false
+gem 'rubocop-performance', '~> 1.25', require: false
 
 gemspec
