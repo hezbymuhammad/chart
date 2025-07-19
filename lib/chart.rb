@@ -6,6 +6,7 @@ require 'chart/store/has_one'
 require 'chart/store/has_many'
 require 'chart/models/base'
 require 'chart/models/product'
+require 'chart/models/delivery_fee'
 
 # Chart module provides functionality for creating and manipulating charts
 module Chart
