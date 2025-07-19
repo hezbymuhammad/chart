@@ -8,6 +8,7 @@ require 'chart/models/base'
 require 'chart/models/offer'
 require 'chart/models/product'
 require 'chart/models/delivery_fee'
+require 'chart/models/basket'
 
 # Chart module provides functionality for creating and manipulating charts
 module Chart
