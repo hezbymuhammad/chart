@@ -112,7 +112,8 @@ module Chart
     end
 
     def add(product_code, quantity = 1)
-      Chart::Models::Basket.add(product_code, quantity)
+      cleaned_quantity =  quantity.nil? ? 1 : quantity.to_f
+      Chart::Models::Basket.add(product_code, cleaned_quantity)
     end
 
     def total

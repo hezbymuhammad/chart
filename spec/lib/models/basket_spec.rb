@@ -119,7 +119,18 @@ RSpec.describe Chart::Models::Basket do
   describe '.add' do
     before(:each) do
       product = Chart::Models::Product.new(id: 'R01', name: 'Red Widget', price: 32.95)
+      product_with_offer = Chart::Models::Product.new(id: 'R02', name: 'Red Widget', price: 30)
+      offer = Chart::Models::Offer.new(
+        id: 1,
+        name: 'Summer Sale',
+        discount: 20,
+        strategy: 'fixed',
+        status: 'active'
+      )
+      product_with_offer.offer = offer
+      offer.save
       product.save
+      product_with_offer.save
     end
 
     it 'adds a new product to the basket' do
@@ -135,6 +146,11 @@ RSpec.describe Chart::Models::Basket do
 
       basket = Chart::Models::Basket.add('R01', 3)
       expect(basket.quantity).to eq(5)
+    end
+
+    it 'apply offer of an existing basket' do
+      basket = Chart::Models::Basket.add('R02', 1)
+      expect(basket.price).to eq(10)
     end
 
     it 'raises an error if the product is not found' do

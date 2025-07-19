@@ -25,6 +25,7 @@ module Chart
 
         unless basket.nil?
           basket.quantity += quantity
+          basket.calculate_price
           return basket
         end
 
