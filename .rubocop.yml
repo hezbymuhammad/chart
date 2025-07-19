@@ -1,0 +1,44 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: true
+
+Naming/VariableName:
+  Exclude:
+    - "spec/**/*"
+
+Naming/ClassAndModuleCamelCase:
+  Exclude:
+    - "lib/**/*"
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true
+
+Security/YAMLLoad:
+  Enabled: true
+
+Metrics/MethodLength:
+  Max: 10
+  Exclude:
+    - "spec/**/*"
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyle: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyle: consistent_comma
