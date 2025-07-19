@@ -12,6 +12,7 @@ require 'chart/models/basket'
 require 'chart/initializers/base'
 require 'chart/initializers/product'
 require 'chart/initializers/delivery_fee'
+require 'chart/initializers/offer'
 
 # Chart module provides functionality for creating and manipulating charts
 module Chart
@@ -42,14 +43,16 @@ module Chart
       display_intro
     end
 
-    def run(command, arg, _aarg, _aaarg)
+    def run(command, arg, aarg, _aaarg)
       case command
       when 'init'
         init
       when 'list'
         list(arg)
       when 'add'
+        add(arg, aarg)
       when 'total'
+        total
       else
         puts "Unable to find command.\n\n"
         display_help
@@ -59,6 +62,7 @@ module Chart
     def init
       Chart::Initializers::Product.new.execute
       Chart::Initializers::DeliveryFee.new.execute
+      Chart::Initializers::Offer.new.execute
     end
 
     def list(resource)
@@ -76,6 +80,14 @@ module Chart
       else
         'Unable to find resource. Available resources: products, delivery_fees, offers, baskets'
       end
+    end
+
+    def add(product_code, quantity = 1)
+      Chart::Models::Basket.add(product_code, quantity)
+    end
+
+    def total
+      Chart::Models::Basket.calculate_total_price
     end
 
     private
