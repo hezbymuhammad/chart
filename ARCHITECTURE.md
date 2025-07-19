@@ -62,39 +62,40 @@ The application's domain models are interconnected through a clean relationship 
 
 ```
 ┌─────────────────┐         ┌─────────────────┐
-│     Product     │         │      Offer      │
-│  ┌───────────┐     │        │  ┌───────────┐  │
-│  │ id        │  │◄────────┤   │ id        │  │
-│  │ name      │  │         │        │ name      │  │
-│  │ price     │  │         │        │ discount  │  │
-│  │ offer     │  │         │        │ strategy  │  │
-│  └───────────┘     │        │ status    │  │
-└─────────────────┘        │  └───────────┘  │
-         △                  └─────────────────┘
+│     Product     │         │      Offer                             │
+│  ┌───────────┐    │         │  ┌───────────┐      │
+│  │ id        │◄───────────┤  │ id                  │      │
+│  │ name      │            │         │ name                │      │
+│  │ price     │            │         │ discount            │      │
+│  │ offer     │            │         │ strategy            │      │
+│  └───────────┘     │         │ status              │      │
+└─────────────────┘         │  └───────────┘      │
+         ▲                               └─────────────────┘
+         │                          ▲
          │                          │
          │                          │ provides discount
-┌─────────────────┐     │ calculation for
-│     Basket      │                 ▼
-│  ┌───────────┐     │  ┌─────────────────┐
-│  │ product   │  │            │ Offer                       │
-│  │ quantity  │  │         │  ┌───────────┐  │
-│  │ price     │  │         │  │  |  pair      │  │
-│  │ offer     │  │◄───────┤  │ fixed     │  │
-│  └───────────┘  │     │  │ percentage│  │
-└─────────────────┘         │  └───────────┘
-         │                        └─────────────────┘
+         │                          │ calculation for
+         │                          ▼
+┌─────────────────┐         ┌─────────────────┐
+│     Basket      │          │  DeliveryFee                          │
+│  ┌───────────┐     │        │   ┌───────────┐    │
+│  │ product   │◄───────────┤ │     id               │     │
+│  │ quantity  │            │         │    name             │      │
+│  │ price     │            │         │    price            │      │
+│  │ offer     │            │         │    threshold        │      │
+│  └───────────┘     │            └───────────┘     │
+└─────────────────┘         └─────────────────┘
+         │
          │ aggregated by
          ▼
 ┌─────────────────┐
-│ Total Calculator│         ┌─────────────────┐
-│  ┌───────────┐  │         │  DeliveryFee    │
-│  │ sum(price)│  │  applies │  ┌───────────┐  │
-│  │ + delivery│  │◄────────┤  │ id        │  │
-│  │ = total   │  │               │  │ name      │  │
-│  └───────────┘  │       │  │ price     │  │
-└─────────────────┘     │  │ threshold │  │
-                            │  └───────────┘  │
-                            └─────────────────┘
+│ Total Calculator           │
+│  ┌───────────┐     │
+│  │ sum(price)       │     │
+│  │ + delivery       │     │
+│  │ = total          │     │
+│  └───────────┘     │
+└─────────────────┘
 ```
 
 ### Data Flow Relationships
