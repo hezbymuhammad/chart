@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './dummy_model'
+require_relative 'dummy_model'
 
 RSpec.describe Chart::Store::Base do
   before(:each) do
@@ -32,6 +32,19 @@ RSpec.describe Chart::Store::Base do
       TestModel.save(instance2)
 
       expect(TestModel.all).to contain_exactly(instance1, instance2)
+    end
+  end
+
+  describe '.reset' do
+    it 'returns all saved instances' do
+      instance1 = double('Instance 1')
+      instance2 = double('Instance 2')
+
+      TestModel.save(instance1)
+      TestModel.save(instance2)
+      TestModel.reset
+
+      expect(TestModel.all).to be_empty
     end
   end
 

@@ -16,6 +16,10 @@ module Chart
         store
       end
 
+      def reset
+        store.clear
+      end
+
       def select(attributes = {})
         store.select do |instance|
           attributes.all? { |key, value| instance.send(key) == value }
