@@ -60,42 +60,48 @@ The application follows a layered architecture pattern with clear separation bet
 
 The application's domain models are interconnected through a clean relationship structure that maintains loose coupling while enabling rich business logic:
 
-```
-┌─────────────────┐         ┌─────────────────┐
-│     Product     │         │      Offer                             │
-│  ┌───────────┐    │         │  ┌───────────┐      │
-│  │ id        │◄───────────┤  │ id                  │      │
-│  │ name      │            │         │ name                │      │
-│  │ price     │            │         │ discount            │      │
-│  │ offer     │            │         │ strategy            │      │
-│  └───────────┘     │         │ status              │      │
-└─────────────────┘         │  └───────────┘      │
-         ▲                               └─────────────────┘
-         │                          ▲
-         │                          │
-         │                          │ provides discount
-         │                          │ calculation for
-         │                          ▼
-┌─────────────────┐         ┌─────────────────┐
-│     Basket      │          │  DeliveryFee                          │
-│  ┌───────────┐     │        │   ┌───────────┐    │
-│  │ product   │◄───────────┤ │     id               │     │
-│  │ quantity  │            │         │    name             │      │
-│  │ price     │            │         │    price            │      │
-│  │ offer     │            │         │    threshold        │      │
-│  └───────────┘     │            └───────────┘     │
-└─────────────────┘         └─────────────────┘
-         │
-         │ aggregated by
-         ▼
-┌─────────────────┐
-│ Total Calculator           │
-│  ┌───────────┐     │
-│  │ sum(price)       │     │
-│  │ + delivery       │     │
-│  │ = total          │     │
-│  └───────────┘     │
-└─────────────────┘
+```mermaid
+classDiagram
+    class Product {
+        +id
+        +name
+        +price
+        +offer
+    }
+
+    class Offer {
+        +id
+        +name
+        +discount
+        +strategy
+        +status
+    }
+
+    class Basket {
+        +product
+        +quantity
+        +price
+        +offer
+    }
+
+    class DeliveryFee {
+        +id
+        +name
+        +price
+        +threshold
+    }
+
+    class Basket.calculate_total_price {
+        +sum(price)
+        +delivery
+        +total
+    }
+
+    Product --> Offer : provides discount
+    Basket --> Product
+    Basket --> Offer
+    Basket --> DeliveryFee : aggregated by
+    Basket.calculate_total_price --> Basket
 ```
 
 ### Data Flow Relationships
