@@ -20,7 +20,7 @@ module Chart
         total_price = all.sum(&:price)
         delivery_fee = Chart::Models::DeliveryFee.apply(total_price)&.price || 0
 
-        total_price + delivery_fee.to_f
+        total_price.round(2) + delivery_fee.round(2)
       end
 
       def self.add(product_code, quantity = 1)
@@ -48,13 +48,14 @@ module Chart
       end
 
       def calculate_price
-        @price = product.price * quantity
+        @price = product.price.round(2) * quantity.to_f
 
         offer = product.offer
         return if offer.nil?
 
         discount = offer.get_discount_for(self)
         @price -= discount if discount && discount > 0
+        @price = @price.round(2)
       end
 
       def save

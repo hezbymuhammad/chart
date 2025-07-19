@@ -9,8 +9,8 @@ module Chart
       def initialize(id:, name:, price:, chart_price_threshold:)
         @id = id
         @name = name
-        @price = price
-        @chart_price_threshold = chart_price_threshold
+        @price = price.to_f.round(2)
+        @chart_price_threshold = chart_price_threshold.to_f.round(2)
       end
 
       def to_s

@@ -13,7 +13,7 @@ module Chart
       def initialize(id:, name:, price:)
         @id = id
         @name = name
-        @price = price
+        @price = price.round(2)
       end
 
       def to_s

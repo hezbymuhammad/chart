@@ -9,7 +9,7 @@ module Chart
       def initialize(id:, name:, discount:, strategy:, status:)
         @id = id
         @name = name
-        @discount = discount
+        @discount = discount.to_f.round(2)
         @strategy = strategy
         @status = status
       end
