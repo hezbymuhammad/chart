@@ -12,6 +12,83 @@ Ruby 3.4.2
 ./bin/build
 ```
 
+# Architecture
+
+See in dept at [ARCHITECTURE.md](ARCHITECTURE.md). Here's high level diagram of technical layer and data relationship.
+
+## Technical Layer
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Presentation Layer                       │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │         CLI Interface (Chart::App)                      ││
+│  │  • Interactive command loop                             ││
+│  │  • Command parsing and routing                          ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+                               │
+┌─────────────────────────────────────────────────────────────┐
+│                   Business Logic Layer                     │
+│  ┌──────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
+│  │     Models       │ │   Initializers  │ │    Strategies   ││
+│  │  • Product       │ │  • Data Seeding │ │  • Offer Types  ││
+│  │  • Basket        │ │  • System Setup │ │  • Calculations ││
+│  │  • Offer         │ └─────────────────┘ └─────────────────┘│
+│  │  • DeliveryFee   │                                       │
+│  └──────────────────┘                                       │
+└─────────────────────────────────────────────────────────────┘
+                               │
+┌─────────────────────────────────────────────────────────────┐
+│                   Data Persistence Layer                   │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │              Store Modules                              ││
+│  │  • In-memory storage (Base)                             ││
+│  │  • Relationship management (HasOne, HasMany)            ││
+│  │  • Query interface                                      ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Data Relationship
+
+```
+┌─────────────────┐         ┌─────────────────┐
+│     Product     │         │      Offer      │
+│  ┌───────────┐     │        │  ┌───────────┐  │
+│  │ id        │  │◄────────┤   │ id        │  │
+│  │ name      │  │         │        │ name      │  │
+│  │ price     │  │         │        │ discount  │  │
+│  │ offer     │  │         │        │ strategy  │  │
+│  └───────────┘     │        │ status    │  │
+└─────────────────┘        │  └───────────┘  │
+         △                  └─────────────────┘
+         │                          │
+         │                          │ provides discount
+┌─────────────────┐     │ calculation for
+│     Basket      │                 ▼
+│  ┌───────────┐     │  ┌─────────────────┐
+│  │ product   │  │            │ Offer                       │
+│  │ quantity  │  │         │  ┌───────────┐  │
+│  │ price     │  │         │  │  |  pair      │  │
+│  │ offer     │  │◄───────┤  │ fixed     │  │
+│  └───────────┘  │     │  │ percentage│  │
+└─────────────────┘         │  └───────────┘
+         │                        └─────────────────┘
+         │ aggregated by
+         ▼
+┌─────────────────┐
+│ Total Calculator│         ┌─────────────────┐
+│  ┌───────────┐  │         │  DeliveryFee    │
+│  │ sum(price)│  │  applies │  ┌───────────┐  │
+│  │ + delivery│  │◄────────┤  │ id        │  │
+│  │ = total   │  │               │  │ name      │  │
+│  └───────────┘  │       │  │ price     │  │
+└─────────────────┘     │  │ threshold │  │
+                            │  └───────────┘  │
+                            └─────────────────┘
+```
+
 # Usage
 
 ```bash
