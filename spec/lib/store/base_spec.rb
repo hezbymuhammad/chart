@@ -1,23 +1,11 @@
 # frozen_string_literal: true
 
-class TestModel
-  extend Chart::Store::Base
-
-  attr_accessor :id, :name
-
-  def initialize(attributes = {})
-    @id = attributes[:id]
-    @name = attributes[:name]
-  end
-
-  def save
-    self.class.save(self)
-  end
-end
+require_relative './dummy_model'
 
 RSpec.describe Chart::Store::Base do
   before(:each) do
     TestModel.send(:instance_variable_set, :@store, [])
+    ModelRelation.send(:instance_variable_set, :@store, [])
   end
 
   describe '.store' do
@@ -60,6 +48,19 @@ RSpec.describe Chart::Store::Base do
 
       found = TestModel.select(id: 2)
       expect(found).to contain_exactly(instance2)
+    end
+
+    it 'finds instances with has one association' do
+      model_relation = ModelRelation.new(id: 2, name: 'example')
+      model_relation.save
+
+      instance = TestModel.new(id: 1, name: 'test')
+      instance.model_relation = model_relation
+      instance.save
+
+      found = TestModel.select(id: 1)
+      expect(found).to contain_exactly(instance)
+      expect(found.first.model_relation).to eq(model_relation)
     end
 
     it 'returns an empty array if no instances match' do
