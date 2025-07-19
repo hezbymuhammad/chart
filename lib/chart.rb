@@ -106,6 +106,8 @@ module Chart
         ].join("\n")
       when 'all'
         list_all
+      when 'checkout'
+        checkout
       else
         "Unable to find resource.\n Available resources: 📚 products, 📦 delivery_fees, 💰 offers, 🛒 baskets"
       end
@@ -118,6 +120,19 @@ module Chart
 
     def total
       Chart::Models::Basket.calculate_total_price
+    end
+
+    def checkout
+      Chart::Models::Basket.checkout
+
+      puts <<~MESSAGE
+        🎉 Checkout Complete! 🎉
+
+        Your chart has been successfully checked out. 🛒✨
+        It's now EMPTY and ready for your next shopping adventure!
+
+        Happy shopping! 🛍️
+      MESSAGE
     end
 
     private
@@ -159,7 +174,8 @@ module Chart
         2. 📜 `list <resource>` - Want to see what’s in your treasure chest? List resources like `products`, `baskets`, `delivery_fees`, and `offers`. Use `all` to unveil everything at once!
         3. ➕ `add <product_code> <quantity>` - Add your favorite products to the chart! If you forget to specify a quantity, don’t worry—just one will be added by default.
         4. 💰 `total` - Ready to see how much your shopping spree costs? Calculate the total price of all products in your chart with just a simple command!
-        5. 🚪 `quit` - Exit the Chart Wizard.
+        5. ✅ `checkout` - Yay. You are successfully checked out the card, now its empty! Reset your chart with just a simple command!
+        6. 🚪 `quit` - Exit the Chart Wizard.
 
         Let’s get started! Type `init` to begin your journey. Happy shopping! 🛒✨
       INTRO
@@ -175,7 +191,8 @@ module Chart
         2. 📜 `list <resource>` - List resources like `products`, `baskets`, `delivery_fees`, and `offers`.
         3. ➕ `add <product_code> <quantity>` - Add products to your chart.
         4. 💰 `total` - Calculate the total price of all products in your chart.
-        5. 🚪 `quit` - Exit the Chart Wizard.
+        5. ✅ `checkout` - Yay. You are successfully checked out the card, now its empty! Reset your chart with just a simple command!
+        6. 🚪 `quit` - Exit the Chart Wizard.
 
         Happy shopping! 🛒✨
       HELP
