@@ -32,5 +32,9 @@ RSpec.describe Chart::Store::HasMany do
 
       expect(main_model.multiple_relations.size).to eq(1)
     end
+
+    it 'validate instance class before assignment' do
+      expect { main_model.multiple_relations << double('Instance 1') }.to raise_error(ArgumentError)
+    end
   end
 end

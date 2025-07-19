@@ -28,5 +28,9 @@ RSpec.describe Chart::Store::HasOne do
       another_model.save
       expect(ModelRelation.all).to include(another_model)
     end
+
+    it 'validate instance class before assignment' do
+      expect { main_model.model_relation = double('Instance 1') }.to raise_error(ArgumentError)
+    end
   end
 end
