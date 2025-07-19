@@ -39,20 +39,26 @@ module Chart
       end
     end
 
+    attr_accessor :is_init
+
     def initialize
       display_intro
+      @is_init = false
     end
 
     def run(command, arg, aarg, _aaarg)
       case command
       when 'init'
         init
+        @is_init = true
       when 'list'
-        list(arg)
+        check_is_init && list(arg)
       when 'add'
-        add(arg, aarg)
+        check_is_init && add(arg, aarg)
       when 'total'
-        total
+        check_is_init && total
+      when 'checkout'
+        check_is_init && checkout
       when 'help'
         display_help
       when '?'
@@ -106,8 +112,6 @@ module Chart
         ].join("\n")
       when 'all'
         list_all
-      when 'checkout'
-        checkout
       else
         "Unable to find resource.\n Available resources: 📚 products, 📦 delivery_fees, 💰 offers, 🛒 baskets"
       end
@@ -125,7 +129,7 @@ module Chart
     def checkout
       Chart::Models::Basket.checkout
 
-      puts <<~MESSAGE
+      <<~MESSAGE
         🎉 Checkout Complete! 🎉
 
         Your chart has been successfully checked out. 🛒✨
@@ -136,6 +140,16 @@ module Chart
     end
 
     private
+
+    def check_is_init
+      if @is_init == false
+        puts "\n‼️‼️‼️ Please initialize using init before using this command."
+
+        return false
+      end
+
+      true
+    end
 
     def assign_default(data, default = 'empty')
       return default if data.empty?
