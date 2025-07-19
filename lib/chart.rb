@@ -5,6 +5,7 @@ require 'chart/store/base'
 require 'chart/store/has_one'
 require 'chart/store/has_many'
 require 'chart/models/base'
+require 'chart/models/offer'
 require 'chart/models/product'
 require 'chart/models/delivery_fee'
 

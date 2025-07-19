@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 module Chart
-  # Models module representation of data model
   module Models
     # Product model represents a product in the chart.
     class Product < Base
+      extend Chart::Store::HasOne
+
+      has_one :offer, Chart::Models::Offer
+
       attr_accessor :id, :name, :price
 
       def initialize(id:, name:, price:)
