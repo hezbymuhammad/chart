@@ -21,6 +21,10 @@ module Chart
         calculate_discount_for(basket)
       end
 
+      def to_s
+        "#{name} - #{strategy} discount - $#{format('%.2f', discount)} - #{status}"
+      end
+
       private
 
       def validate_strategy_for(basket)

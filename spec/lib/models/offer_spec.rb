@@ -18,6 +18,20 @@ RSpec.describe Chart::Models::Offer do
     end
   end
 
+  describe '#to_s' do
+    it 'returns a string representation of the offer' do
+      offer = Chart::Models::Offer.new(
+        id: 1,
+        name: 'Summer Sale',
+        discount: 20,
+        strategy: 'fixed',
+        status: 'active'
+      )
+
+      expect(offer.to_s).to eq('Summer Sale - fixed discount - $20.00 - active')
+    end
+  end
+
   describe '#get_discount_for' do
     let(:basket) { double('Basket', quantity: 2, price: 100.00) }
 

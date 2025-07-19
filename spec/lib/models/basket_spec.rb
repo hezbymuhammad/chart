@@ -15,6 +15,17 @@ RSpec.describe Chart::Models::Basket do
     end
   end
 
+  describe '#to_s' do
+    it 'returns a string representation of the delivery fee' do
+      product = Chart::Models::Product.new(id: 1, name: 'Product 1', price: 100.00)
+      basket = Chart::Models::Basket.new(product: product, quantity: 2)
+
+      basket.save
+
+      expect(basket.to_s).to eq('Product 1 - quantity 2 - total $200.00')
+    end
+  end
+
   describe '#calculate_price' do
     context 'when there is no offer' do
       it 'calculates the price based on quantity and product price' do

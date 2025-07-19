@@ -17,6 +17,19 @@ RSpec.describe Chart::Models::DeliveryFee do
     end
   end
 
+  describe '#to_s' do
+    it 'returns a string representation of the delivery fee' do
+      delivery_fee = Chart::Models::DeliveryFee.new(
+        id: 1,
+        name: 'Standard Delivery',
+        price: 5.99,
+        chart_price_threshold: 50.00
+      )
+
+      expect(delivery_fee.to_s).to eq('Standard Delivery - $5.99')
+    end
+  end
+
   describe '#apply' do
     it 'returns the delivery fee that meets the chart price threshold' do
       delivery_fee1 = Chart::Models::DeliveryFee.new(

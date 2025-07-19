@@ -40,6 +40,10 @@ module Chart
         calculate_price
         super
       end
+
+      def to_s
+        "#{product.name} - quantity #{quantity} - total $#{format('%.2f', price || 0)}"
+      end
     end
   end
 end
