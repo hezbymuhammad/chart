@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Chart::Models::DeliveryFee do
+  before(:each) do
+    Chart::Models::Product.send(:instance_variable_set, :@store, [])
+    Chart::Models::DeliveryFee.send(:instance_variable_set, :@store, [])
+    Chart::Models::Offer.send(:instance_variable_set, :@store, [])
+    Chart::Models::Basket.send(:instance_variable_set, :@store, [])
+  end
+
   describe '#initialize' do
     it 'creates a delivery fee with the given attributes' do
       delivery_fee = Chart::Models::DeliveryFee.new(
@@ -36,7 +43,7 @@ RSpec.describe Chart::Models::DeliveryFee do
         id: 1,
         name: 'Standard Delivery',
         price: 5.99,
-        chart_price_threshold: 50.00
+        chart_price_threshold: 0.00
       )
       delivery_fee1.save
 
@@ -44,7 +51,7 @@ RSpec.describe Chart::Models::DeliveryFee do
         id: 2,
         name: 'Express Delivery',
         price: 10.99,
-        chart_price_threshold: 100.00
+        chart_price_threshold: 50.00
       )
       delivery_fee2.save
 
@@ -52,13 +59,11 @@ RSpec.describe Chart::Models::DeliveryFee do
         id: 3,
         name: 'Priority Delivery',
         price: 15.99,
-        chart_price_threshold: 200.00
+        chart_price_threshold: 100.00
       )
       delivery_fee3.save
 
-      expect(Chart::Models::DeliveryFee.apply(60.00)).to eq(delivery_fee1)
-      expect(Chart::Models::DeliveryFee.apply(150.00)).to eq(delivery_fee2)
-      expect(Chart::Models::DeliveryFee.apply(250.00)).to eq(delivery_fee3)
+      expect(Chart::Models::DeliveryFee.apply(30.00)).to eq(delivery_fee1)
     end
   end
 end

@@ -17,7 +17,10 @@ module Chart
       end
 
       def self.calculate_total_price
-        all.sum(&:price)
+        total_price = all.sum(&:price)
+        delivery_fee = Chart::Models::DeliveryFee.apply(total_price)&.price || 0
+
+        total_price + delivery_fee.to_f
       end
 
       def self.add(product_code, quantity = 1)

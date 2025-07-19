@@ -20,7 +20,7 @@ module Chart
       def self.apply(chart_price)
         all.select do |delivery_fee|
           delivery_fee.chart_price_threshold <= chart_price
-        end.sort_by { |delivery_fee| delivery_fee.chart_price_threshold }.last
+        end.max_by(&:chart_price_threshold)
       end
     end
   end

@@ -2,6 +2,9 @@
 
 RSpec.describe Chart::Models::Basket do
   before(:each) do
+    Chart::Models::Product.send(:instance_variable_set, :@store, [])
+    Chart::Models::DeliveryFee.send(:instance_variable_set, :@store, [])
+    Chart::Models::Offer.send(:instance_variable_set, :@store, [])
     Chart::Models::Basket.send(:instance_variable_set, :@store, [])
   end
 
@@ -90,6 +93,14 @@ RSpec.describe Chart::Models::Basket do
 
   describe '.calculate_total_price' do
     it 'calculates the total price of all baskets' do
+      delivery_fee1 = Chart::Models::DeliveryFee.new(
+        id: 1,
+        name: 'Standard Delivery',
+        price: 5.00,
+        chart_price_threshold: 0.00
+      )
+      delivery_fee1.save
+
       product1 = Chart::Models::Product.new(id: 1, name: 'Product 1', price: 100.00)
       product2 = Chart::Models::Product.new(id: 2, name: 'Product 2', price: 150.00)
 
@@ -100,7 +111,7 @@ RSpec.describe Chart::Models::Basket do
       basket2.save
 
       total_price = Chart::Models::Basket.calculate_total_price
-      expect(total_price).to eq(350.00)
+      expect(total_price).to eq(355.00)
     end
   end
 

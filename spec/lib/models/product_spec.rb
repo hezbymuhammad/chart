@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Chart::Models::Product do
+  before(:each) do
+    Chart::Models::Product.send(:instance_variable_set, :@store, [])
+    Chart::Models::DeliveryFee.send(:instance_variable_set, :@store, [])
+    Chart::Models::Offer.send(:instance_variable_set, :@store, [])
+    Chart::Models::Basket.send(:instance_variable_set, :@store, [])
+  end
+
   describe '#initialize' do
     it 'creates a product with the given attributes' do
       product = Chart::Models::Product.new(id: 1, name: 'Test Product', price: 19.99)
