@@ -28,6 +28,9 @@ Naming/ClassAndModuleCamelCase:
 Lint/UnusedMethodArgument:
   Enabled: true
 
+Lint/MissingSuper:
+  Enabled: false
+
 Performance/RedundantMerge:
   Enabled: true
 
