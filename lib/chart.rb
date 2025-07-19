@@ -11,6 +11,7 @@ require 'chart/models/delivery_fee'
 require 'chart/models/basket'
 require 'chart/initializers/base'
 require 'chart/initializers/product'
+require 'chart/initializers/delivery_fee'
 
 # Chart module provides functionality for creating and manipulating charts
 module Chart
