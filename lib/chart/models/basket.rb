@@ -16,6 +16,16 @@ module Chart
         @quantity = quantity
       end
 
+      def self.calculate_total_price
+        all.sum(&:price)
+      end
+
+      # assume checkout is successful
+      def self.checkout
+        all.each(&:save)
+        reset
+      end
+
       def calculate_price
         @price = product.price * quantity
 
